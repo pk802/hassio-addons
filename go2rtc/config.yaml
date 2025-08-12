@@ -14,7 +14,7 @@ stage: stable
 
 url: "https://github.com/pk802/go2rtc"
 
-# Use your custom Docker image
+# Use YOUR custom Docker image
 image: "ghcr.io/pk802/go2rtc:latest"
 
 map:
