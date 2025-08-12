@@ -1,39 +1,38 @@
+# https://github.com/AlexxIT/builder/blob/master/builder.sh
 name: go2rtc
-description: Ultimate camera streaming application with support for RTSP, RTMP, HTTP-FLV, WebRTC, MSE, HLS, MP4, MJPEG, HomeKit, FFmpeg, etc.
+description: Hardware transcoding for Intel (VAAPI) and Raspberry (V4L2)
+url: https://github.com/pk802/go2rtc
+image: ghcr.io/pk802/go2rtc:latest
+arch: [ amd64, aarch64, i386, armv7 ]
+
+# https://developers.home-assistant.io/docs/add-ons/configuration
 version: 1.9.9
 slug: go2rtc
-url: https://github.com/pk802/go2rtc
-arch:
-  - aarch64
-  - amd64
-  - armhf
-  - armv7
-  - i386
-image: ghcr.io/pk802/go2rtc:latest
-host_network: true
 init: false
-map:
-  - config:rw
-  - ssl:ro
-  - media:rw
+startup: system
+host_network: true
+homeassistant_api: true
+video: true
+audio: true
+ingress: true
+ingress_port: 1984
+panel_icon: mdi:camera-wireless
+map: [ "config:rw", "media", "ssl" ]
+
 options:
   log_level: info
   streams: {}
+
+schema:
+  log_level: list(trace|debug|info|warn|error|fatal|panic)?
+  streams: dict
+
 ports:
   1984/tcp: 1984
   8554/tcp: 8554
   8555/tcp: 8555
+
 ports_description:
   1984/tcp: Web UI and API
   8554/tcp: RTSP TCP server
   8555/tcp: RTSP UDP server
-schema:
-  log_level: list(trace|debug|info|warn|error|fatal|panic)?
-  streams: dict?
-startup: services
-homeassistant_api: true
-audio: true
-video: true
-ingress: true
-ingress_port: 1984
-panel_icon: mdi:camera-wireless
